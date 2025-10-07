@@ -23,7 +23,7 @@ app.post('/create-paymongo-link', async (req, res) => {
     const { amount } = req.body;
     if (!amount) return res.status(400).json({ error: 'Missing amount' });
 
-    const response = await fetch('https://api.paymongo.com/v1/links', {
+    const response = await fetch('https://api.paymongo.com/v1/checkout_sessions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,10 +33,18 @@ app.post('/create-paymongo-link', async (req, res) => {
       body: JSON.stringify({
         data: {
           attributes: {
-            amount: Number(amount) * 100, // PHP -> centavos
-            description: 'Order Payment',
-            remarks: `Order #${Date.now()}`,
-            redirect: { success: SUCCESS_URL, failed: FAILED_URL },
+			line_items: [
+				{
+					name: P3 Subscription,
+					quantity: 1,
+					amount: Number(amount) * 100,
+					currency: PHP
+				}
+			],
+			payment_method_types: [gcash, grab_pay,paymaya,qrph,dob],
+			success_url: SUCCESS_URL,
+			cancel_url: FAILED_URL,
+			failed_url: FAILED_URL
           },
         },
       }),
