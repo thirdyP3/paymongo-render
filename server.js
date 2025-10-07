@@ -35,13 +35,13 @@ app.post('/create-paymongo-link', async (req, res) => {
           attributes: {
 			line_items: [
 				{
-					name: P3 Subscription,
+					name: 'P3 Subscription',
 					quantity: 1,
 					amount: Number(amount) * 100,
 					currency: PHP
 				}
 			],
-			payment_method_types: [gcash, grab_pay,paymaya,qrph,dob],
+			payment_method_types: ['gcash', 'grab_pay','paymaya','qrph','dob'],
 			success_url: SUCCESS_URL,
 			cancel_url: FAILED_URL,
 			failed_url: FAILED_URL
@@ -63,3 +63,4 @@ app.post('/create-paymongo-link', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
