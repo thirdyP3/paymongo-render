@@ -6,7 +6,11 @@ import cors from 'cors';
 const app = express();
 
 // NOTE: for production restrict origins: cors({ origin: 'https://your-systeme-url' })
-app.use(cors());
+app.use(cors({
+  origin: ['https://www.prescription-performance.com/test-transaction', 'https://www.prescription-performance.com'],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 
 const PAYMONGO_SECRET = process.env.PAYMONGO_SECRET;
@@ -63,5 +67,6 @@ app.post('/create-paymongo-link', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 
 
